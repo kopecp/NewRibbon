@@ -49,15 +49,15 @@ namespace SharedParametersLoad
                             }
                     }
                 //@DO KLASY
-                //TODO: (1) powyższy kod przechwytuje ExternalDefinition z parametrów współdzielonych załadowanych do modeli. 
-                //TODO: (1) Lista która go przechwytuje jest zagnierzdzona ale to nie problem
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-                //TODO: (2) Potem dopiero przejscie do tworzenia parametrów i odpowiednie ustalenie pętli tak ,żeby przypisywały się do dobrych kategorii
                 //TODO:DO KLASY readExcel
                 //Load ExcelFile and Categories to assign
+                string spFileName = spFile.Filename;
+                string excelFileName = spFileName.Replace(".txt", ".xls");
+
                 Excel.Application xlApp = new Excel.Application();
-                Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@"C:\Users\piotr.kopec\Downloads\testSharedParam.xls");
+                Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(excelFileName);
                 Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
                 Excel.Range xlRange = xlWorksheet.UsedRange;
 
@@ -65,8 +65,6 @@ namespace SharedParametersLoad
                 int colCount = xlRange.Columns.Count;
                 List<List<string>> categoryListFromExcel = new List<List<string>>();
 
-                //iterate over the rows and columns and print to the console as it appears in the file
-                //excel is not zero based!!
                 //wartości odejmowane od iteratorów wynikają z konstrukcji przykłądowego excela -> łatwiej opóścić od razu niepotrzebne kolumny i wiersze
                 for (int i = 8; i <= rowCount; i++)
                 {
@@ -125,6 +123,7 @@ namespace SharedParametersLoad
                 //@DO KLASY category list
                 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 //TODO:(3) generalnie to trzeba dodać jeszcze iterator do wyboru pomiędzy parametrem Type i Instance i ewentualnie grupę do któej ma zostać dodany parametr
+                //TODO:(3) trzeba zobaczyc co jest z ... Array group = Enum.GetValues(typeof(BuiltInParameterGroup));
                 Transaction trans = new Transaction(doc, "Dodanie SP");
 
                 trans.Start();
