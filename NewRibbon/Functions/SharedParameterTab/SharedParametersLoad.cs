@@ -138,9 +138,14 @@ namespace SharedParametersLoad
                             catSet.Insert(n);
                         }
                         InstanceBinding bind = app.Create.NewInstanceBinding(catSet);
-                        Array group = Enum.GetValues(typeof(BuiltInParameterGroup));
 
-                        bindMap.Insert(spFileExternalDef[i],bind);
+                    Array group = Enum.GetValues(typeof(BuiltInParameterGroup));
+
+                    var allSomeEnumValues = (BuiltInParameterGroup[])Enum.GetValues(typeof(BuiltInParameterGroup));
+                    BuiltInParameterGroup hgs = allSomeEnumValues[97];
+
+
+                    bindMap.Insert(spFileExternalDef[i],bind);
                     }
                 
                 trans.Commit();
