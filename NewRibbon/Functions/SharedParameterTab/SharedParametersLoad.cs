@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WF = System.Windows.Forms;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -54,8 +55,21 @@ namespace SharedParametersLoad
                 //TODO:DO KLASY readExcel
                 //Load ExcelFile and Categories to assign
                 string spFileName = spFile.Filename;
-                string excelFileName = spFileName.Replace(".txt", ".xls");
+                //string excelFileName = spFileName.Replace(".txt", ".xls");
+                string excelFileName = "";
+                TaskDialog.Show("Info", "Wybierz plik excel z kategoriami przypisaymi do parametrów");
+                //TODO:Open dialog start
+                WF.OpenFileDialog openFileDialog1 = new WF.OpenFileDialog();
 
+                openFileDialog1.InitialDirectory = "c:\\";
+                openFileDialog1.Filter = "Excel files (*.xlsx;*.xlsm;*.xls)|.xlsx;*.xlsm;*.xls";
+                openFileDialog1.RestoreDirectory = true;
+                
+                if (openFileDialog1.ShowDialog() == WF.DialogResult.OK)
+                {
+                    excelFileName = openFileDialog1.FileName;
+                }
+                //TODO:Open dialog end
                 Excel.Application xlApp = new Excel.Application();
                 Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(excelFileName);
                 Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
@@ -150,6 +164,7 @@ namespace SharedParametersLoad
                 
                 trans.Commit();
 
+                TaskDialog.Show("Info", "Dodanie parametrów współdzielonych zostało zakończone");
                 return Result.Succeeded;
             }
 
