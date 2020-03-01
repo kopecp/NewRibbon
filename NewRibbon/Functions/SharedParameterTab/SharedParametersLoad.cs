@@ -55,10 +55,9 @@ namespace SharedParametersLoad
                 //TODO:DO KLASY readExcel
                 //Load ExcelFile and Categories to assign
                 string spFileName = spFile.Filename;
-                //string excelFileName = spFileName.Replace(".txt", ".xls");
                 string excelFileName = "";
                 TaskDialog.Show("Info", "Wybierz plik excel z kategoriami przypisaymi do parametrów");
-                //TODO:Open dialog start
+
                 WF.OpenFileDialog openFileDialog1 = new WF.OpenFileDialog();
 
                 openFileDialog1.InitialDirectory = "c:\\";
@@ -69,7 +68,7 @@ namespace SharedParametersLoad
                 {
                     excelFileName = openFileDialog1.FileName;
                 }
-                //TODO:Open dialog end
+
                 Excel.Application xlApp = new Excel.Application();
                 Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(excelFileName);
                 Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
