@@ -56,7 +56,7 @@ namespace TotalLength
                 string lengthInch = Math.Round(lengthList.Sum() * 12, 2).ToString() + " inch";
 
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine("Total Length is:");
+                sb.AppendLine("Total Length isaaa:");
                 sb.AppendLine(lengthFeet);
                 sb.AppendLine(lengthInch);
                 sb.AppendLine(lengthMeters);

@@ -25,6 +25,7 @@ namespace NewRibbon
             RibbonPanel ribbonPanel = application.CreateRibbonPanel(tabName, "ROBOCZA");
             RibbonPanel ribbonPanel0 = application.CreateRibbonPanel(tabName, "Total Length");
             RibbonPanel ribbonPanel1 = application.CreateRibbonPanel(tabName, "ShP");
+            RibbonPanel ribbonPanel2 = application.CreateRibbonPanel(tabName, "SQL");
 
             // Get dll assembly path
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
@@ -48,6 +49,12 @@ namespace NewRibbon
                 thisAssemblyPath,
                 "SharedParametersLoad.SharedParam");
 
+            PushButtonData b1SQL1 = new PushButtonData(
+               "cmdUtworzTabele",
+               "Dodaj" + System.Environment.NewLine + "Tabele SQL",
+               thisAssemblyPath,
+               "SharedParametersLoad.SharedParam");
+
             //Add buttons to Ribbon --> tabs
             PushButton pb1ElemetInfo = ribbonPanel.AddItem(b1DataRobocza) as PushButton;
             pb1ElemetInfo.ToolTip = "Wybierz Element";
@@ -60,9 +67,14 @@ namespace NewRibbon
             pb1TotalLength.LargeImage = pb1ImageTotalLength;
 
             PushButton pb1LoadShP = ribbonPanel1.AddItem(b1DataShP) as PushButton;
-            pb1TotalLength.ToolTip = "Zaladuj Parametry";
+            pb1LoadShP.ToolTip = "Zaladuj Parametry";
             BitmapImage pb1ImageLoadShP = new BitmapImage(new Uri("pack://application:,,,/NewRibbon;component/Resources/add_shared_parameter.ico"));
-            pb1TotalLength.LargeImage = pb1ImageLoadShP;
+            pb1LoadShP.LargeImage = pb1ImageLoadShP;
+
+            PushButton pbSqlRvt = ribbonPanel2.AddItem(b1SQL1) as PushButton;
+            pbSqlRvt.ToolTip = "Utworz Tabele SQL";
+            BitmapImage pbImageLoadSQL = new BitmapImage(new Uri("pack://application:,,,/NewRibbon;component/Resources/add_shared_parameter.ico"));
+            pbSqlRvt.LargeImage = pbImageLoadSQL;
 
 
 
