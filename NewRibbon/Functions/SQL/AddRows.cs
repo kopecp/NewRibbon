@@ -19,20 +19,6 @@ namespace AddRows
     {
 
 
-        public static void GetUserDetails(List<string> lista, Element e)
-        {
-            String par = e.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).AsString();
-            if (par == null)
-            {
-                lista.Add("Brak danych w Revit");
-            }
-            else
-            {
-                lista.Add(par);
-            }
-        }
-
-
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             UIApplication uiapp = commandData.Application;
@@ -50,7 +36,7 @@ namespace AddRows
 
             string textToSearch = "AECTEST";
             Parameter parameter = elems[0].get_Parameter(new Guid("8160aed7-fe71-4da4-aea4-ad283b76a76a"));
-
+                      
             ParameterValueProvider pvp
               = new ParameterValueProvider(parameter.Id);
 
@@ -71,10 +57,15 @@ namespace AddRows
 
             IList<Element> filterByParam
               = collector.WherePasses(equalFilter)
-                .OfCategory(BuiltInCategory.OST_GenericModel)
+                .WherePasses(catFilter)
                 .ToElements();
 
-
+            IList<Element> instances
+              = new FilteredElementCollector(doc)
+                .OfClass(typeof(FamilyInstance))
+                .WherePasses(equalFilter)
+                .WherePasses(catFilter)
+                .ToElements();
 
 
 
@@ -86,13 +77,35 @@ namespace AddRows
             List<string> listaZnak = new List<string>();
             List<string> listaGuid = new List<string>();
 
-            
+
+
+
+
+            foreach (var i in instances)
+            {
+                FamilyInstance fi = i as FamilyInstance;
+                String parKomentarz = fi.ToRoom.Name;
+
+                if (parKomentarz == null)
+                {
+                    listaKomentarz.Add("Brak danych w Revit");
+                }
+                else
+                {
+                    listaKomentarz.Add(parKomentarz);
+                }
+            }
+
+
+
+
+
+
             foreach (var e in filterByParam)
             {
                 int parID = e.get_Parameter(BuiltInParameter.ID_PARAM).AsInteger();
                 listaID.Add(parID);
-
-
+/*
                 String parKomentarz = e.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).AsString();
                 if (parKomentarz == null)
                 {
@@ -103,7 +116,7 @@ namespace AddRows
                     listaKomentarz.Add(parKomentarz);
                 }
                 //BuiltInParameter.ALL_MODEL_MARK
-
+*/
                 String parZnak = e.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).AsString();
                 if (parZnak==null)
                 {
